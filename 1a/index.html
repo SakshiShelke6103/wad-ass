@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Budget Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Dashboard</h2>
+    <ul>
+      <li>User Registration</li>
+      <li>User List</li>
+      <li>Budget Entries</li>
+      <li>Reports</li>
+      <li>Settings</li>
+      <li>Support</li>
+      <li>Logout</li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <h1>Budget Overview</h1>
+    <label for="user">Select User</label>
+    <select id="user">
+      <option selected>Sakshi Shelke</option>
+    </select>
+
+    <div class="cards">
+      <div class="card green">Total Budgeted<br><strong>₹600.00</strong></div>
+      <div class="card blue">Categories<br><strong>3</strong></div>
+      <div class="card teal">Last Entry<br><strong>₹100</strong></div>
+    </div>
+
+    <div class="content">
+      <div class="chart-section">
+        <h3>Expense Distribution</h3>
+        <canvas id="pieChart" width="200" height="200"></canvas>
+        <div class="legend">
+          <div><span class="box food"></span> Food</div>
+          <div><span class="box college"></span> College</div>
+          <div><span class="box travel"></span> Travel</div>
+        </div>
+      </div>
+
+      <div class="transactions">
+        <h3>Recent Transactions</h3>
+        <table>
+          <tr><th>Date</th><th>Category</th><th>Amount</th></tr>
+          <tr><td>4/22/2025</td><td>Food</td><td>₹200</td></tr>
+          <tr><td>4/22/2025</td><td>College</td><td>₹300</td></tr>
+          <tr><td>4/22/2025</td><td>Travel</td><td>₹100</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("pieChart");
+    const ctx = canvas.getContext("2d");
+
+    const data = [200, 300, 100]; // Food, College, Travel
+    const colors = ["#28a745", "#ffc107", "#dc3545"];
+    const total = data.reduce((sum, value) => sum + value, 0);
+
+    let startAngle = 0;
+    data.forEach((value, i) => {
+      const sliceAngle = (value / total) * 2 * Math.PI;
+      ctx.beginPath();
+      ctx.moveTo(100, 100);
+      ctx.arc(100, 100, 90, startAngle, startAngle + sliceAngle);
+      ctx.closePath();
+      ctx.fillStyle = colors[i];
+      ctx.fill();
+      startAngle += sliceAngle;
+    });
+  </script>
+</body>
+</html>
